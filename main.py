@@ -1,4 +1,5 @@
 import argparse
+import magic
 
 banner=r'''
 ░▒▓████████▓▒░▒▓█▓▒░▒▓█▓▒░      ░▒▓████████▓▒░▒▓████████▓▒░▒▓██████▓▒░░▒▓█▓▒░      ░▒▓█▓▒░▒▓███████▓▒░ ░▒▓███████▓▒░▒▓████████▓▒░ 
@@ -89,13 +90,17 @@ def main():
         
     }
     detected=False
-    for magic,file_type in magic_dict.items():
-        if magic_bytes.startswith(magic):
+    for Magic,file_type in magic_dict.items():
+        if magic_bytes.startswith(Magic):
             print(f"File type detected: {file_type}")
             detected=True
             break
     if not detected:
-        print("File type could not be determined") 
+        file_type=magic.from_file("first.js", mime=True)
+        detected=True
+        print(f"File type detected using 'python-magic': {file_type}")
+    else:
+        print("File type could not be detected.")
     print("File type detection completed.")
     
 
