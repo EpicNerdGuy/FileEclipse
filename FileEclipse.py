@@ -1,6 +1,6 @@
 import argparse
 import magic
-import lang_detect
+from lang_detect import detect_programming_language
 
 banner=r'''
 ░▒▓████████▓▒░▒▓█▓▒░▒▓█▓▒░      ░▒▓████████▓▒░▒▓████████▓▒░▒▓██████▓▒░░▒▓█▓▒░      ░▒▓█▓▒░▒▓███████▓▒░ ░▒▓███████▓▒░▒▓████████▓▒░ 
@@ -103,7 +103,7 @@ def main():
             detected_lang=detect_programming_language(file)
             print(f"Detected programming language: {detected_lang}")    
         else:
-            print(f"File type detected using 'python-magic': {file_type}")
+            print(f"File type detected: {file_type}")
         if not detected:
             print("File type could not be determined.")
     print("FILE DETECTION COMPLETED.")

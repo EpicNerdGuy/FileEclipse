@@ -1,4 +1,4 @@
-import FileEclipse
+
 
 LANG_PATTERNS = {
     # 1. Python
@@ -201,4 +201,3 @@ def detect_programming_language(file):
             scores[lang] = score
         detected_language = max(scores, key=scores.get)
     return detected_language
-
