@@ -6,13 +6,29 @@ This tool is useful for security analysis, malware investigation, digital forens
 
 ---
 
-## Features
+## **Features**
 
-* Reads the first bytes of a file to extract the magic number
-* Compares extracted magic number with a built in signature database
-* Detects document formats, images, archives, executables, audio, video and scripts
-* Shows the magic number in uppercase hexadecimal
-* Works cross platform on any system that runs Python
+* **Three-Layer Detection System**
+
+  1. **Magic Number Detection** – Reads the first bytes of the file and matches them against a built-in signature database.
+  2. **Heuristic Extension Validation** – Cross-checks file extensions against known patterns for extra verification.
+  3. **Programming Language Detection** – Uses a pattern-scoring system to identify text-based code files such as Python, JavaScript, C, etc.
+
+* **Accurate Binary Identification**
+  Detects documents, images, archives, executables, audio/video, certificates, and script formats based on real binary signatures.
+
+* **Hexadecimal Magic Number Display**
+  Shows the extracted magic number in uppercase hexadecimal for clarity and debugging.
+
+* **Cross-Platform Support**
+  Works on Windows, Linux, and macOS—anywhere Python runs.
+
+* **Extensible Signature Database**
+  Add new file types easily by expanding the `magic_dict` and language patterns.
+
+* **Useful for Security & Forensics**
+  Ideal for malware analysis, digital forensics, penetration testing, and secure file inspection.
+
 
 ---
 
@@ -32,88 +48,68 @@ cd FileEclipse
 Run the tool by providing a file with the `-f` or `--file` option.
 
 ```
-python main.py -f <path_to_file>
+python FileEclipse.py -f <path_to_file>
 ```
 
 Example:
 
 ```
-python main.py -f test.pdf
+python FileEclipse.py -f test.py
 ```
 
 Output example:
 
 ```
-Magic Number of the file 'test.pdf': 25504446
-File type detected: PDF Document
-File type detection completed.
+Magic Number of the file '.\test.py': 696D706F727420756E6974746573740D
+File type detected: Python script, ASCII text executable, with CRLF line terminators
+FILE DETECTION COMPLETED.
 ```
 
-Another example with an image:
+Another example with a text file:
 
 ```
-python main.py -f image.png
-```
-
-Output:
-
-```
-Magic Number of the file 'image.png': 89504E470D0A1A0A
-File type detected: PNG Image
-File type detection completed.
-```
-
-Example for unknown or unsupported file types:
-
-```
-python main.py -f random.bin
+python FileEclipse.py -f ".\file.txt"
 ```
 
 Output:
 
 ```
-Magic Number of the file 'random.bin': 4F2A7C11A93400AC
-File type could not be determined
-File type detection completed.
+Magic Number of the file '.\file.txt': 2166756E6374696F6E28297B66756E63
+File type detected: ASCII text, with very long lines, with no line terminators
+FILE DETECTION COMPLETED.
 ```
-
----
 
 ## How It Works
 
-1. The program opens the file in binary mode.
-2. It reads the first N bytes (default is 16).
-3. It converts those bytes to uppercase hexadecimal.
-4. It checks whether the beginning of that hex string matches known magic numbers.
-5. If a match is found, the corresponding file type is displayed.
-6. If no match is found, the file is marked as unknown.
+<img width="1127" height="753" alt="image" src="https://github.com/user-attachments/assets/e026ee15-0a45-4374-b2ab-72b1cb0aa9e6" />
+
 
 ---
 
 ## Vid Sample
 
-https://github.com/user-attachments/assets/52108e5c-9c21-4a2b-a10a-2712514329be
 
-## Supported File Types
 
-FileEclipse currently detects:
+https://github.com/user-attachments/assets/27e7f8a2-6620-4190-9722-8b4587b9fc70
 
-* Documents including PDF, DOC, DOCX and XML
-* Images including PNG, JPEG, GIF, TIFF and BMP
-* Archives including ZIP, RAR, 7z, TAR and GZIP
-* Executables including ELF, EXE and Java class files
-* Audio and video containers such as MP3, FLAC, MP4 and MKV
-* Certificates and scripts
 
-You can extend this list by adding more magic numbers in the `magic_dict` dictionary.
+
+## **Supported File Types**
+
+| Category                  | File Types                                                              |
+| ------------------------- | ----------------------------------------------------------------------- |
+| **Documents**             | PDF, DOC, DOCX, RTF, XML, HTML, JSON, YAML                              |
+| **Images**                | PNG, JPEG, GIF, BMP, TIFF, WebP                                         |
+| **Archives / Compressed** | ZIP, RAR, 7z, TAR, GZIP, BZIP2                                          |
+| **Executables**           | ELF (Linux), EXE/PE (Windows), Java `.class`, Mach-O (macOS*)           |
+| **Audio / Video**         | MP3, FLAC, WAV, OGG, MP4, MKV                                           |
+| **Scripts / Code**        | Bash, Python, JavaScript, TypeScript, Java, C, C++, Ruby, PHP, Go, Rust |
+| **Certificates**          | X.509 (DER, PEM), PKCS#7, PKCS#12                                       |
+
+*Add Mach-O only if you include its magic number signature.
+
 
 ---
 
-## Future Improvements
-
-* Automatic fallback to file extension guessing
-* Support for deeper signature detection beyond the first bytes
-* Optional verbose output
-* Logging to external files
 
 ---
